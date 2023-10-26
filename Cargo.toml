@@ -1,0 +1,7 @@
+[workspace]
+resolver = "2"
+members = [
+    "transistor-emulation",
+    "vcpu8",
+    "samples8"
+]
