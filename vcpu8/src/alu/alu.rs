@@ -31,6 +31,12 @@ impl ALU for EumulatedALU {
             0b00000101 => {
                 registers[output_register as usize] = Math::full_adder_8bit(registers[output_register as usize], 0b00000001)
             },
+            0b00000100 => {
+                registers[output_register as usize] = Math::full_subtractor_8bit(registers[output_register as usize], registers[operand_register as usize])
+            },
+            0b00000110 => {
+                registers[output_register as usize] = Math::full_subtractor_8bit(registers[output_register as usize], 0b00000001)
+            },
             0b00000111 => {
                 registers[output_register as usize] = Math::multiply(registers[output_register as usize], registers[operand_register as usize])
             }
@@ -57,7 +63,7 @@ impl ALU for NativeALU {
                 registers[output_register as usize] = NativeMath::add(registers[output_register as usize], registers[operand_register as usize])
             },
             0b00000100 => {
-                registers[output_register as usize] = NativeMath::substract(registers[output_register as usize], registers[operand_register as usize])
+                registers[output_register as usize] = NativeMath::subtract(registers[output_register as usize], registers[operand_register as usize])
             },
             0b00000101 => {
                 registers[output_register as usize] = NativeMath::increment(registers[output_register as usize])

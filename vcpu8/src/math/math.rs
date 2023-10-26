@@ -49,6 +49,44 @@ impl Math {
         }
         result
     }
+
+    pub fn half_subtractor(a: u8, b: u8) -> (u8, u8) {
+        let difference_out= a ^ b;
+        let borrow_out = !a & b;
+
+        (difference_out, borrow_out)
+    }
+
+    pub fn full_subtractor(a: u8, b: u8, bin: u8) -> (u8, u8) {
+        let (diffrence_out1, borrow_out1) = Math::half_subtractor(a, b);
+        let (diffrence_out2, borrow_out2) = Math::half_subtractor(diffrence_out1, bin);
+
+        let difference_out = diffrence_out2;
+        let borrow_out = borrow_out1 | borrow_out2;
+    
+        (difference_out, borrow_out)
+    }
+
+    pub fn full_subtractor_8bit(number_1: u8, number_2: u8) -> u8 {
+        let mut result = 0;
+        let mut borrow = 0;
+
+        // Iterate over each bit in the 8 bit number
+        for i in 0..8 {
+            // Get bit at position i for number_1 and number_2
+            let a = (number_1 >> i) & 1;
+            let b = (number_2 >> i) & 1;
+
+             // Call full_subtractor function which can add 2 single bit
+            let (difference, c) = Math::full_subtractor(a, b, borrow);
+            result |= difference << i;
+            // Update borrow for next iteration
+            borrow = c;
+        }
+
+        result |= (u16::from(borrow) << 8) as u8;
+        result
+    }
 }
 
 // Lazy approach
@@ -57,7 +95,7 @@ impl NativeMath {
         number_1 + number_2
     }
 
-    pub fn substract(number_1: u8, number_2: u8) -> u8 {
+    pub fn subtract(number_1: u8, number_2: u8) -> u8 {
         number_1 - number_2
     }
 
