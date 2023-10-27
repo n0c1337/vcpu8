@@ -1,4 +1,4 @@
-use crate::alu::alu::{NativeALU, ALU, Mode, EumulatedALU};
+use crate::alu::alu::{ALU, Mode, EumulatedALU};
 
 pub enum Registers {
     R0 = 0,
@@ -26,13 +26,13 @@ impl CPU {
             let (opcode, output_register, operand_register) = i;
 
             // HALT
-            if opcode == 0b00001010 {
+            if opcode == 0x15 {
                 break;
             }
             
             match self.mode {
                 Mode::Emulated => EumulatedALU::execute(opcode, output_register, operand_register, &mut self.registers),
-                Mode::Native => NativeALU::execute(opcode, output_register, operand_register, &mut self.registers)
+                Mode::Native => unimplemented!("Use emulated mode.")
             }
         }
         println!("After Execution: {:?}", self.registers);
