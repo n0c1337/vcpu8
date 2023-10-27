@@ -4,12 +4,6 @@ pub trait ALU {
     fn execute(opcode: u8, output_register: u8, operand_register: u8, registers: &mut [u8; 8]);
 }
 
-pub enum Mode {
-    Emulated = 0,
-    #[deprecated(note="Not implemented anymore, use Mode::Emulated")]
-    Native
-}
-
 pub struct EumulatedALU;
 
 impl ALU for EumulatedALU {

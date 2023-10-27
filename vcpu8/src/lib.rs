@@ -24,7 +24,6 @@ mod tests {
         let result2 = Math::full_adder(0, 0, 1);
         let result3 = Math::full_adder(0, 1, 0);
         let result4 = Math::full_adder(0, 1, 1);
-        println!("{:?}", result4);
 
         let result5 = Math::full_adder(1, 0, 0);
         let result6 = Math::full_adder(1, 0, 1);
@@ -68,7 +67,6 @@ mod tests {
         let result2 = Math::full_subtractor(0, 0, 1);
         let result3 = Math::full_subtractor(0, 1, 0);
         let result4 = Math::full_subtractor(0, 1, 1);
-        println!("{:?}", result2);
 
         let result5 = Math::full_subtractor(1, 0, 0);
         let result6 = Math::full_subtractor(1, 0, 1);
@@ -92,5 +90,13 @@ mod tests {
         let result2 = Math::full_subtractor_8bit(0b10101010, 0b00110011);
         assert_eq!(result, 0b00000010);
         assert_eq!(result2, 0b1110111)
+    }
+
+    #[test]
+    fn multiply_test() {
+        let result = Math::multiply(4, 12);
+        let result2 = Math::multiply(12, 4);
+        assert_eq!(result, 48);
+        assert_eq!(result2, 48)
     }
 }

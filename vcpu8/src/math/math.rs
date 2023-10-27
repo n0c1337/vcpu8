@@ -42,7 +42,7 @@ impl Math {
     pub fn multiply(number_1: u8, number_2: u8) -> u8 {
         let mut result = 0;
         for _ in 0..number_2 {
-            result += Math::full_adder_8bit(number_1, 0b0)
+            result = Math::full_adder_8bit(number_1, result)
         }
         result
     }

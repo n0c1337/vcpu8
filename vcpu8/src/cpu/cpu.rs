@@ -1,4 +1,4 @@
-use crate::alu::alu::{ALU, Mode, EumulatedALU};
+use crate::alu::alu::{ALU, EumulatedALU};
 
 pub enum Registers {
     R0 = 0,
@@ -12,14 +12,14 @@ pub enum Registers {
 }
 
 pub struct CPU {
-    mode: Mode,
     registers: [u8; 8]
 }
 
 impl CPU {
-    pub fn new(mode: Mode) -> Self {
-        CPU { mode: mode, registers: [0; 8] }
+    pub fn new() -> Self {
+        CPU { registers: [0; 8] }
     }
+
     pub fn execute(&mut self, program: Vec<(u8, u8, u8)>) -> u8 {
         println!("Before Execution: {:?}", self.registers);
         for i in program {
@@ -30,10 +30,7 @@ impl CPU {
                 break;
             }
             
-            match self.mode {
-                Mode::Emulated => EumulatedALU::execute(opcode, output_register, operand_register, &mut self.registers),
-                Mode::Native => unimplemented!("Use emulated mode.")
-            }
+           EumulatedALU::execute(opcode, output_register, operand_register, &mut self.registers)
         }
         println!("After Execution: {:?}", self.registers);
 

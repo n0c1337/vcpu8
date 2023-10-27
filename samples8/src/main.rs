@@ -1,7 +1,7 @@
-use vcpu8::{cpu::cpu::CPU, alu::alu::Mode};
+use vcpu8::cpu::cpu::CPU;
 
 fn main() {
-    let mut cpu = CPU::new(Mode::Emulated);
+    let mut cpu = CPU::new();
 
     let program: Vec<(u8, u8, u8)> = vec![
         (1, 7, 42),
