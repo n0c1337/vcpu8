@@ -1,52 +1,69 @@
 use crate::math::math::Math;
 
+pub type INSTRUCTION = u8;
+pub const MOV: INSTRUCTION = 0x01;
+pub const ANDB: INSTRUCTION = 0x02;
+pub const ORB: INSTRUCTION = 0x03;
+pub const XORB: INSTRUCTION = 0x04;
+pub const NOT: INSTRUCTION = 0x05;
+pub const SHL: INSTRUCTION = 0x06;
+pub const SHR: INSTRUCTION = 0x07;
+pub const ADD: INSTRUCTION = 0x08;
+pub const INC: INSTRUCTION = 0x09;
+pub const SUB: INSTRUCTION = 0x0A;
+pub const DEC: INSTRUCTION = 0x0B;
+pub const MUL: INSTRUCTION = 0x0C;
+pub const CMP: INSTRUCTION = 0x0D;
+pub const HALT: INSTRUCTION = 0x15;
+
+
 pub trait ALU {
-    fn execute(opcode: u8, output_register: u8, operand_register: u8, registers: &mut [u8; 8]);
+    fn execute(opcode: u8, output_register: u8, operand_register_1: u8, operand_register_2: u8, registers: &mut [u8; 8]);
 }
 
 pub struct EumulatedALU;
 
 impl ALU for EumulatedALU {
-    fn execute(opcode: u8, output_register: u8, operand_register: u8, registers: &mut [u8; 8]) {
+    fn execute(opcode: u8, output_register: u8, operand_register_1: u8, operand_register_2: u8, registers: &mut [u8; 8]) {    
         match opcode {
-            0x01 => {
-                registers[output_register as usize] = operand_register
+            MOV => {
+                registers[output_register as usize] = operand_register_1
             }
-            0x02 => {
-                registers[output_register as usize] = registers[output_register as usize] & registers[operand_register as usize]
+            ANDB => {
+                registers[output_register as usize] = registers[operand_register_1 as usize] & registers[operand_register_2 as usize]
             }
-            0x03 => {
-                registers[output_register as usize] = registers[output_register as usize] | registers[operand_register as usize]
+            ORB => {
+                registers[output_register as usize] = registers[operand_register_1 as usize] | registers[operand_register_2 as usize]
             }
-            0x04 => {
-                registers[output_register as usize] = registers[output_register as usize] ^ registers[operand_register as usize]
+            XORB => {
+                registers[output_register as usize] = registers[output_register as usize] ^ registers[operand_register_2 as usize]
             }
-            0x05 => {
-                registers[output_register as usize] = !registers[output_register as usize]
+            NOT => {
+                registers[output_register as usize] = !registers[operand_register_1 as usize]
             }
-            0x06 => {
-                registers[output_register as usize] = registers[output_register as usize] << registers[operand_register as usize]
+            SHL => {
+                registers[output_register as usize] = registers[operand_register_1 as usize] << registers[operand_register_2 as usize]
             }
-            0x07 => {
-                registers[output_register as usize] = registers[output_register as usize] >> registers[operand_register as usize]
+            SHR => {
+                registers[output_register as usize] = registers[operand_register_1 as usize] >> registers[operand_register_2 as usize]
             }
-            0x08 => {
-                registers[output_register as usize] = Math::full_adder_8bit(registers[output_register as usize], registers[operand_register as usize])
+            ADD => {
+                registers[output_register as usize] = Math::full_adder_8bit(registers[operand_register_1 as usize], registers[operand_register_2 as usize])
             }
-            0x09 => {
-                registers[output_register as usize] = Math::full_adder_8bit(registers[output_register as usize], 0b00000001)
+            INC => {
+                registers[output_register as usize] = Math::full_adder_8bit(registers[operand_register_1 as usize], 0b00000001)
             }
-            0x0A => {
-                registers[output_register as usize] = Math::full_subtractor_8bit(registers[output_register as usize], registers[operand_register as usize])
+            SUB => {
+                registers[output_register as usize] = Math::full_subtractor_8bit(registers[operand_register_1 as usize], registers[operand_register_2 as usize])
             }
-            0x0B => {
-                registers[output_register as usize] = Math::full_subtractor_8bit(registers[output_register as usize], 0b00000001)
+            DEC => {
+                registers[output_register as usize] = Math::full_subtractor_8bit(registers[operand_register_1 as usize], 0b00000001)
             }
-            0x0C => {
-                registers[output_register as usize] = Math::multiply(registers[output_register as usize], registers[operand_register as usize])
+            MUL => {
+                registers[output_register as usize] = Math::multiply(registers[operand_register_1 as usize], registers[operand_register_2 as usize])
             }
-            0x0D => {
-                if registers[output_register as usize] == registers[operand_register as usize] {
+            CMP => {
+                if registers[operand_register_1 as usize] == registers[operand_register_2 as usize] {
                     registers[output_register as usize] = 1;
                 } else {
                     registers[output_register as usize] = 0;

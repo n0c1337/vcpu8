@@ -1,6 +1,10 @@
-pub mod math;
-pub mod alu;
-pub mod cpu;
+mod math;
+mod alu;
+mod cpu;
+
+pub use math::math::*;
+pub use alu::alu::*;
+pub use cpu::cpu::*;
 
 #[cfg(test)]
 mod tests {

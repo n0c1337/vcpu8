@@ -1,12 +1,12 @@
-use vcpu8::cpu::cpu::CPU;
+use vcpu8::{CPU, MOV, R1, R2, ADD, RD};
 
 fn main() {
     let mut cpu = CPU::new();
 
-    let program: Vec<(u8, u8, u8)> = vec![
-        (1, 7, 42),
-        (1, 2, 42), 
-        (4, 7, 2)
+    let program: Vec<(u8, u8, u8, u8)> = vec![
+        (MOV, R1, 42, 0),
+        (MOV, R2, 42, 0), 
+        (ADD, RD, R1, R2)
     ];
     
     let output = cpu.execute(program);
