@@ -1,4 +1,4 @@
-use vcpu8::{CPU, MOV, R1, R2, ADD, RD};
+use vcpu8::{CPU, MOV, R2, R1, ADD, RD};
 
 fn main() {
     let mut cpu = CPU::new();

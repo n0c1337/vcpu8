@@ -1,20 +1,20 @@
 use crate::math::math::Math;
 
-pub type INSTRUCTION = u8;
-pub const MOV: INSTRUCTION = 0x01;
-pub const ANDB: INSTRUCTION = 0x02;
-pub const ORB: INSTRUCTION = 0x03;
-pub const XORB: INSTRUCTION = 0x04;
-pub const NOT: INSTRUCTION = 0x05;
-pub const SHL: INSTRUCTION = 0x06;
-pub const SHR: INSTRUCTION = 0x07;
-pub const ADD: INSTRUCTION = 0x08;
-pub const INC: INSTRUCTION = 0x09;
-pub const SUB: INSTRUCTION = 0x0A;
-pub const DEC: INSTRUCTION = 0x0B;
-pub const MUL: INSTRUCTION = 0x0C;
-pub const CMP: INSTRUCTION = 0x0D;
-pub const HALT: INSTRUCTION = 0x15;
+pub type Instruction = u8;
+pub const MOV: Instruction = 0x01;
+pub const ANDB: Instruction = 0x02;
+pub const ORB: Instruction = 0x03;
+pub const XORB: Instruction = 0x04;
+pub const NOT: Instruction = 0x05;
+pub const SHL: Instruction = 0x06;
+pub const SHR: Instruction = 0x07;
+pub const ADD: Instruction = 0x08;
+pub const INC: Instruction = 0x09;
+pub const SUB: Instruction = 0x0A;
+pub const DEC: Instruction = 0x0B;
+pub const MUL: Instruction = 0x0C;
+pub const CMP: Instruction = 0x0D;
+pub const HALT: Instruction = 0x15;
 
 
 pub trait ALU {
